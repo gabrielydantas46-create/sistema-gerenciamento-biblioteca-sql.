@@ -1,0 +1,67 @@
+CREATE DATABASE biblioteca;
+
+USE biblioteca;
+
+CREATE TABLE livros (
+    id_livro INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL,
+    autor VARCHAR(100),
+    categoria VARCHAR(50),
+    disponivel BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE leitores (
+    id_leitor INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100)
+);
+
+CREATE TABLE emprestimos (
+    id_emprestimo INT PRIMARY KEY AUTO_INCREMENT,
+    id_livro INT NOT NULL,
+    id_leitor INT NOT NULL,
+    data_emprestimo DATE NOT NULL,
+    data_devolucao DATE,
+
+    FOREIGN KEY (id_livro)
+        REFERENCES livros(id_livro),
+
+    FOREIGN KEY (id_leitor)
+        REFERENCES leitores(id_leitor)
+);
+
+INSERT INTO livros
+(titulo, autor, categoria)
+VALUES
+('Dom Casmurro', 'Machado de Assis', 'Romance'),
+('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Fantasia'),
+('Capitães da Areia', 'Jorge Amado', 'Romance'),
+('Harry Potter', 'J.K. Rowling', 'Fantasia'),
+('A Hora da Estrela', 'Clarice Lispector', 'Drama');
+
+INSERT INTO leitores (nome, email)
+VALUES
+('Ana Silva', 'ana@email.com'),
+('Pedro Santos', 'pedro@email.com'),
+('Maria Oliveira', 'maria@email.com');
+
+SELECT * FROM livros;
+
+SELECT * FROM livros
+WHERE titulo LIKE 'A%';
+
+SELECT
+    leitores.nome,
+    livros.titulo,
+    emprestimos.data_emprestimo
+FROM emprestimos
+INNER JOIN leitores
+ON emprestimos.id_leitor = leitores.id_leitor
+INNER JOIN livros
+ON emprestimos.id_livro = livros.id_livro;
+
+SELECT * FROM livros
+WHERE disponivel = TRUE;
+
+SELECT COUNT(*) AS quantidade_livros
+FROM livros;
