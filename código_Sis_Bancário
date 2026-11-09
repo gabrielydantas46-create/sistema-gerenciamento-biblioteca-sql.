@@ -1,0 +1,146 @@
+
+# SISTEMA DE CONTROLE FINANCEIRO
+
+receitas = []
+despesas = []
+metas = []
+historico = []
+
+# Função para cadastrar receitas
+def cadastrar_receita():
+    descricao = input("Descrição da receita: ")
+    valor = float(input("Valor recebido: R$ "))
+
+    receitas.append(valor)
+    historico.append("Receita: " + descricao + " - R$ " + str(valor))
+
+    print("Receita cadastrada com sucesso!")
+
+
+# Função para cadastrar despesas
+def cadastrar_despesa():
+    descricao = input("Descrição da despesa: ")
+    categoria = input("Categoria: ")
+    valor = float(input("Valor gasto: R$ "))
+
+    despesas.append(valor)
+
+    historico.append(
+        "Despesa: " + descricao +
+        " | Categoria: " + categoria +
+        " | R$ " + str(valor)
+    )
+
+    print("Despesa cadastrada com sucesso!")
+
+
+# Função para consultar saldo
+def consultar_saldo():
+    total_receitas = sum(receitas)
+    total_despesas = sum(despesas)
+
+    saldo = total_receitas - total_despesas
+
+    print("\n--- SALDO FINANCEIRO ---")
+    print(f"Receitas: R$ {total_receitas:.2f}")
+    print(f"Despesas: R$ {total_despesas:.2f}")
+    print(f"Saldo: R$ {saldo:.2f}")
+
+
+# Função para consultar despesas por categoria
+def consultar_categorias():
+    print("\n--- GASTOS POR CATEGORIA ---")
+
+    if len(despesas) == 0:
+        print("Nenhuma despesa cadastrada.")
+    else:
+        for item in historico:
+            if "Despesa:" in item:
+                print(item)
+
+
+# Função para cadastrar metas
+def cadastrar_meta():
+    nome = input("Nome da meta: ")
+    valor = float(input("Valor necessário: R$ "))
+
+    metas.append({
+        "nome": nome,
+        "valor": valor
+    })
+
+    print("Meta cadastrada com sucesso!")
+
+
+# Função para consultar metas
+def consultar_metas():
+    print("\n--- METAS FINANCEIRAS ---")
+
+    if len(metas) == 0:
+        print("Nenhuma meta cadastrada.")
+    else:
+        for meta in metas:
+            print(f"Meta: {meta['nome']}")
+            print(f"Valor necessário: R$ {meta['valor']:.2f}")
+
+
+# Função para consultar histórico
+def consultar_historico():
+    print("\n--- HISTÓRICO FINANCEIRO ---")
+
+    if len(historico) == 0:
+        print("Nenhuma movimentação registrada.")
+    else:
+        for item in historico:
+            print(item)
+
+
+# Menu principal
+while True:
+
+    print("""
+=================================
+    CONTROLE FINANCEIRO
+=================================
+
+1 - Cadastrar receita
+2 - Cadastrar despesa
+3 - Consultar saldo
+4 - Consultar gastos por categoria
+5 - Cadastrar meta financeira
+6 - Consultar metas
+7 - Consultar histórico
+0 - Sair
+
+=================================
+""")
+
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        cadastrar_receita()
+
+    elif opcao == "2":
+        cadastrar_despesa()
+
+    elif opcao == "3":
+        consultar_saldo()
+
+    elif opcao == "4":
+        consultar_categorias()
+
+    elif opcao == "5":
+        cadastrar_meta()
+
+    elif opcao == "6":
+        consultar_metas()
+
+    elif opcao == "7":
+        consultar_historico()
+
+    elif opcao == "0":
+        print("Obrigada por utilizar o sistema!")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")
